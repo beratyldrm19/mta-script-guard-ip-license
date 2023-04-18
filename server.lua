@@ -12,15 +12,14 @@ local denemeasdsad = addEventHandler("onResourceStart",resourceRoot,function()
     setTimer(function()
 local deneme = dbQuery(function(qh)
     for v, k in ipairs((dbPoll(qh, 0, false))) do
-  
-      local sananeaqaveli = k.ip
+      local getip = k.ip
       if k.key == licensekey then       
           if hasObjectPermissionTo ( getThisResource (), "function.fetchRemote", true) then
-            fetchRemote("https://api.my-ip.io/ip", function(ipdensanane)
-              if ipdensanane == sananeaqaveli then
+            fetchRemote("https://api.my-ip.io/ip", function(getlocalip)
+              if getlocalip == getip then
                 _print__("World Scripting License Verified")
               else
-                _print__("World Scripting - Çalıntı Sistem Tespit Edildi")  
+                _print__("World Scripting - Çalıntı Sistem Tespit Edildi")  --ip eşleşmedi
                 stopResource(getThisResource())
                 setFPSLimit___(25)
                 function chatbox(thePlayer, cmd)
@@ -33,8 +32,7 @@ local deneme = dbQuery(function(qh)
     end)
    end   
       else
-        local woodieprotect = 0
-        _print__("World Scripting - Key Veri Tabaninda Bulunamadi")
+        _print__("World Scripting - Key Veri Tabaninda Bulunamadi") --key eşleşmedi
         stopResource(getThisResource())
         setFPSLimit___(25)
         function chatbox(thePlayer, cmd)
@@ -45,7 +43,7 @@ local deneme = dbQuery(function(qh)
      setTimer(chatbox,0,500) 
     end
    end
-  end, woodieconnect, "SELECT * FROM lisanslar ")
+  end, woodieconnect, "SELECT * FROM table_ismi ")
  end ,5000,1)
   else
     print("Database Error , Woodie İle İletişime Geçin")
