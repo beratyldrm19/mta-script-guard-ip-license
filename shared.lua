@@ -1,0 +1,2 @@
+licensekey = "testkey"
+
